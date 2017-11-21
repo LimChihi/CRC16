@@ -20,7 +20,7 @@ class CRC16 {
         computeCrcTable()
     }
     
-    func getCRCResult (data: [UInt8]) -> [UInt8] {
+    func getCRCResult(by data: [UInt8]) -> [UInt8] {
         var crc = getCrc(data: data)
         var crcArr: [UInt8] = [0,0]
         for i in (0..<2).reversed() {
@@ -28,6 +28,13 @@ class CRC16 {
             crc >>= 8
         }
         return crcArr
+    }
+    
+    func getCRCResult(by stringData: String, using encoding: String.Encoding = .utf8) -> [UInt8]? {
+        guard let data = stringData.data(using: encoding) else {
+            return nil
+        }
+        return getCRCResult(by: [UInt8](data))
     }
     
     /**
