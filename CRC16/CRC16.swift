@@ -14,22 +14,19 @@ class CRC16 {
     /// Seed, You should change this seed.
     private let gPloy = 0x0000
     
-    init() {
+    static let instance = CRC16()
+    
+    private init() {
         computeCrcTable()
     }
     
     func getCRCResult (data: [UInt8]) -> [UInt8] {
-        var crc = getCrc(data)
+        var crc = getCrc(data: data)
         var crcArr: [UInt8] = [0,0]
-        ////        Swift3.0
-        //        for i in (0..<2).reversed() {
-        //
-        //        }
-        for (var i = 1; i >= 0; i -= 1) {
+        for i in (0..<2).reversed() {
             crcArr[i] = UInt8(crc % 256)
             crc >>= 8
         }
-        
         return crcArr
     }
     
@@ -38,7 +35,7 @@ class CRC16 {
      */
     private func computeCrcTable() {
         for i in 0..<256 {
-            crcTable.append(getCrcOfByte(i))
+            crcTable.append(getCrcOfByte(aByte: i))
         }
     }
     
